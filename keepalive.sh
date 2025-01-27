@@ -1,6 +1,9 @@
 #!/bin/bash
 
-installpath="/home/runner/work/"
+SCRIPT_PATH=$(realpath "$0")
+SCRIPT_DIR=$(dirname "$SCRIPT_PATH")
+
+installpath="$SCRIPT_DIR"
 source ${installpath}/serv00-play/utils.sh
 
 autoUp=$1
