@@ -1,6 +1,6 @@
 #!/bin/bash
 
-installpath="$HOME"
+installpath="/home/runner/work/"
 source ${installpath}/serv00-play/utils.sh
 
 autoUp=$1
