@@ -1,5 +1,9 @@
 #!/bin/bash
 
+SCRIPT_PATH=$(realpath "$0")
+SCRIPT_DIR=$(dirname "$SCRIPT_PATH")
+installpath=$(dirname "$SCRIPT_DIR")
+
 AUTOUPDATE=${AUTOUPDATE:-Y}
 SENDTYPE=${SENDTYPE:-null}
 TELEGRAM_TOKEN=${TELEGRAM_TOKEN:-null}
@@ -19,9 +23,9 @@ for info in "${hosts_info[@]}"; do
   pass=$(echo $info | jq -r ".password")
 
   if [[ "$AUTOUPDATE" == "Y" ]]; then
-    script="/home/runner/work/serv00-play/serv00-play/keepalive.sh autoupdate ${SENDTYPE} \"${TELEGRAM_TOKEN}\" \"${TELEGRAM_USERID}\" \"${WXSENDKEY}\" \"${BUTTON_URL}\" \"${pass}\""
+    script="${SCRIPT_DIR}/keepalive.sh autoupdate ${SENDTYPE} \"${TELEGRAM_TOKEN}\" \"${TELEGRAM_USERID}\" \"${WXSENDKEY}\" \"${BUTTON_URL}\" \"${pass}\""
   else
-    script="/home/runner/work/serv00-play/serv00-play/keepalive.sh noupdate ${SENDTYPE} \"${TELEGRAM_TOKEN}\" \"${TELEGRAM_USERID}\" \"${WXSENDKEY}\" \"${BUTTON_URL}\" \"${pass}\""
+    script="${SCRIPT_DIR}/keepalive.sh noupdate ${SENDTYPE} \"${TELEGRAM_TOKEN}\" \"${TELEGRAM_USERID}\" \"${WXSENDKEY}\" \"${BUTTON_URL}\" \"${pass}\""
   fi
   output=$(sshpass -p "$pass" ssh -o StrictHostKeyChecking=no -p "$port" "$user@$host" "bash -s" <<<"$script")
 
